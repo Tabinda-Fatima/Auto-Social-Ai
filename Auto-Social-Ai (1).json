@@ -1,0 +1,316 @@
+{
+  "name": "Auto-Social-Ai",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Post Creator",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Post Topic"
+            },
+            {
+              "fieldLabel": "Target Audience"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "78bb2b30-0f99-4ed5-a6e0-1667a08b0391",
+      "name": "On form submission",
+      "webhookId": "b3971f90-1547-4549-8181-bfab8745b690"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        224
+      ],
+      "id": "79d5b7f2-5e99-48ae-a1f0-7a033aaf9123",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "p5xkEBRy4jJe5Abt",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Topic of Research: {{ $json['Post Topic'] }}\nTarget Audience: {{ $json['Target Audience'] }}",
+        "options": {
+          "systemMessage": "Overview:\nYou are an AI agent specialized in creating professional, educational, and engaging SocialMedia posts based on any topic provided by the user.\n\nObjectives:\nAlways begin by conducting a real-time search using the Tavily tool to gather the most accurate, up-to-date information on the topic. The post should be written to appeal to the provided target audience.\nBased on your research, generate a well-structured Socialmedia post that:\n- Starts with an engaging hook\n- Professional in tone\n- Clear and easy to read\n- Educational and insightful\n- Light on emojis (use only when highly relevant and minimal)\n- Includes proper source attribution (e.g., “according to [source]”)\n- Contains relevant hashtags to improve visibility\n- Ends with a clear call to action (e.g., asking for thoughts, feedback, or shares)\n\nOutput Instructions:\n- Your ONLY output should be the final SocialMdeia post text.\n- Do not include explanations, notes, or anything beyond the post itself.\n\nExample Workflow:\n1. Receive a topic (e.g., “The ROI of warehouse automation”)\n2. Use Tavily to search and gather recent information or case studies\n3. Draft a SocialMedia post using that research\n4. Format it with source citations, clean structure, optional hashtags, and a call to action.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        80,
+        0
+      ],
+      "id": "9551ee07-8ca5-4c76-88c3-db833d4573ca",
+      "name": "Insight_AI_Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=SocialMedia Post: {{ $json.output }}",
+        "options": {
+          "systemMessage": "You are a h## Overview\nYou are an AI agent that transforms SocialMedia posts into visual prompt descriptions for generating graphic marketing materials. These visuals are designed to be paired with the post on SocialMedia, helping communicate the message in a visually engaging, brand-aligned way.\n\n## Objective\n- Read and analyze the given LinkedIn post.\n- Identify the main message, insight, or takeaway from the post.\n- Create a clear and compelling graphic prompt that can be used with a text-to-image generator.\n\nThe result should be a marketing-style graphic — not a literal scene or random artistic photo — that:\n1) Visually supports or illustrates the key idea of the post\n2) Looks appropriate for use in a professional SicialMedia feed\n3) Feels polished, modern, and engaging\n\n## Output Instructions\n- Output only the final image prompt. Do not output quotation marks.\n- Do not repeat or rephrase the LinkedIn post.\n- Do not add any explanations or extra content — just the image prompt.\n- Never leave things blank like “Header area reserved for customizable callout text”.\n- Output numeric stats when available in the original post.\n\n## Style Guidelines\n- Think like a brand designer or marketing creative.\n- Visuals may include: text, charts, icons, abstract shapes, overlays, modern illustrations, motion-like effects, bold typography elements (described, not drawn), or metaphorical concepts.\n- You can mention layout suggestions (e.g., “split screen design,” “header with bold title and subtle background illustration”).\n- Assume the output will be generated using AI image tools — your prompt should guide those tools effectively.\n\n## Example Prompt Format\nA modern flat-style graphic showing a human brain connected to mechanical gears, representing the fusion of AI and automation. Minimalist background, soft gradients, clean sans-serif text placement space at the top.\nelpful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        432,
+        0
+      ],
+      "id": "554459bf-be14-4914-83a2-d52cab9f4467",
+      "name": "Image_Design"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": ""Bearer YOUR_OPENAI_API_KEY""
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "size",
+              "value": "1024x1024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        784,
+        0
+      ],
+      "id": "a89f778e-e3e1-43b5-8f9f-a1626ab5b4ed",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "fileName": "generated_image.jpeg",
+        "options": {}
+      },
+      "name": "Save_Image",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        0
+      ],
+      "id": "23e7eb50-8353-428e-bf1a-1abf9c11c139"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer Your Tavily Api Key"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"success life\",\n  \"auto_parameters\": false,\n  \"topic\": \"general\",\n  \"search_depth\": \"basic\",\n  \"chunks_per_source\": 3,\n  \"max_results\": 1,\n  \"time_range\": null,\n  \"start_date\": \"2025-02-09\",\n  \"end_date\": \"2025-12-29\",\n  \"include_answer\": true,\n  \"include_raw_content\": true,\n  \"include_images\": false,\n  \"include_image_descriptions\": false,\n  \"include_favicon\": false,\n  \"include_domains\": [],\n  \"exclude_domains\": [],\n  \"country\": null\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        224
+      ],
+      "id": "871a2b37-f7ad-41f4-91cc-5f56f1bf872e",
+      "name": "Tavily"
+    },
+    {
+      "parameters": {
+        "sendTo": "write your Sender Email here",
+        "subject": "hi , your post is ready to use:))",
+        "message": "==<p><strong>My Social Media Post:</strong></p>\n<p>{{$node[\"Insight_AI_Agent\"].json[\"output\"]}}</p>\n<br>\n<img src=\"{{$node[\"HTTP Request1\"].json[\"data\"][0][\"url\"]}}\" width=\"400\"/>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1456,
+        0
+      ],
+      "id": "ec8f2306-28a5-45a7-b909-a273d2a91b9f",
+      "name": "Send a message",
+      "webhookId": "03f71585-9c5e-430a-aff0-7aac6115752e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "sRamHVmwTiaXBCqZ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[\"data\"][0][\"url\"] }}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "name": "Download_Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1024,
+        0
+      ],
+      "id": "0a3a6864-50de-49e1-a7a7-8ec180049e90"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Insight_AI_Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Insight_AI_Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Image_Design",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insight_AI_Agent": {
+      "main": [
+        [
+          {
+            "node": "Image_Design",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image_Design": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Download_Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "Insight_AI_Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save_Image": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download_Image": {
+      "main": [
+        [
+          {
+            "node": "Save_Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2c8c7058-3e96-4c95-b076-d8fa8aa32426",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0b3666881a6e38835e60a79de3cfe33d7d812d56e0ea5b3216eea7d726baa107"
+  },
+  "id": "MCJgHZp5vYeg55vn",
+  "tags": []
+}
