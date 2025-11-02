@@ -168,7 +168,7 @@
     },
     {
       "parameters": {
-        "sendTo": "write your Sender Email here",
+        "sendTo": "write your Email here",
         "subject": "hi , your post is ready to use:))",
         "message": "==<p><strong>My Social Media Post:</strong></p>\n<p>{{$node[\"Insight_AI_Agent\"].json[\"output\"]}}</p>\n<br>\n<img src=\"{{$node[\"HTTP Request1\"].json[\"data\"][0][\"url\"]}}\" width=\"400\"/>\n",
         "options": {}
