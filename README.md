@@ -2,7 +2,8 @@
 
 Auto-Social-Ai is an intelligent automation workflow built in n8n that creates professional social media posts using AI — from research to content to visuals — and delivers them automatically.
 
-🎥 Demo Video: Watch on Google Drive
+🎥 **Demo Video:** [Watch on Google Drive](https://drive.google.com/file/d/10zCPWxHz0ZnJ69F5Wc8_LWEr-WbhF3KD/view?usp=sharing)
+
 
 🚀 Key Highlights
 
