@@ -1,56 +1,89 @@
-🌟 Auto-Social-Ai — AI-Powered Post Creator
+# 🚀 Auto-Social-AI — AI-Powered Social Media Automation
 
-Auto-Social-Ai is an intelligent automation workflow built in n8n that creates professional social media posts using AI — from research to content to visuals — and delivers them automatically.
+An AI-powered automation workflow built with **n8n**, **OpenAI**, and **Tavily** that automatically researches a topic, writes engaging social media content, generates matching visuals, and delivers the final post via Gmail.
 
-🎥 **Demo Video:** [Watch on Google Drive](https://drive.google.com/file/d/10zCPWxHz0ZnJ69F5Wc8_LWEr-WbhF3KD/view?usp=sharing)
+---
 
+## 📌 Project Overview
 
-🚀 Key Highlights
+Auto-Social-AI eliminates the manual effort of creating social media content by automating the complete content creation process—from research to delivery.
 
-✍️ AI-generated posts for any topic and audience
+---
 
-🔍 Real-time research using the Tavily API
+## ✨ Features
 
-🎨 AI image generation via OpenAI DALL·E
+- 🔍 Real-time topic research using Tavily Search API
+- ✍️ AI-generated social media content with OpenAI GPT
+- 🎨 Automatic image generation using OpenAI Image API
+- 📧 Email delivery through Gmail
+- ⚡ Fully automated end-to-end workflow
+- 🖱️ Built visually in n8n without custom backend code
 
-📤 Automatic email delivery through Gmail
+---
 
-🧩 100% built visually in n8n — no manual coding
+## 🔄 Workflow
 
-🧠 How It Works
+1. User enters a topic and target audience.
+2. Tavily gathers relevant information.
+3. OpenAI generates a professional social media post.
+4. AI creates a matching visual prompt.
+5. OpenAI Image API generates an image.
+6. Gmail delivers the final content automatically.
 
-User enters Post Topic and Target Audience in a form.
+---
 
-Tavily API fetches real-world insights.
+## 🛠️ Tech Stack
 
-OpenAI (GPT-4.1-mini) crafts a high-quality, LinkedIn-style post.
+- n8n
+- OpenAI GPT
+- OpenAI Image API
+- Tavily Search API
+- Gmail API
 
-The Image Agent converts text into a visual prompt.
+---
 
-OpenAI Image API generates a matching post image.
+## 📷 Workflow
 
-Final result is automatically sent to the user’s Gmail inbox.
+> Add your n8n workflow screenshot here.
 
-⚙️ Tools & APIs Used
-Purpose	Tool / API
-Workflow Automation	n8n
-Content Generation	OpenAI GPT-4.1-mini
-Research	Tavily Search API
-Image Creation	OpenAI Image Generation API
-Delivery	Gmail API
-💡 Project Goal
+Example:
 
-To build a fully automated AI social media assistant that saves time for creators, marketers, and businesses by generating complete, ready-to-post content with one click.
+```md
+![Workflow](workflow.png)
+```
 
-📁 Import Instructions
+---
 
-Open n8n → Import Workflow → Upload Auto-Social-Ai.json
+## 🎥 Demo Video
 
-Add your API keys (OpenAI, Tavily, Gmail)
+**Google Drive Demo**
 
-Run the workflow and get your post instantly 💌
+https://drive.google.com/file/d/10zCPWxHz0ZnJ69F5Wc8_LWEr-WbhF3KD/view
 
-👩‍💻 Created By
+---
 
-Tabinda Fatima
-AI & Automation Enthusiast | Aspiring AI/ML Engineer
+## 📂 Workflow File
+
+```
+Auto-Social-Ai (1).json
+```
+
+Import this workflow into n8n and configure your API credentials.
+
+---
+
+## 💼 Use Cases
+
+- LinkedIn post generation
+- Marketing content automation
+- Personal branding
+- Business social media management
+- AI content creation
+
+---
+
+## 👩‍💻 Author
+
+**Tabinda Fatima**
+
+AI Automation & Workflow Developer
