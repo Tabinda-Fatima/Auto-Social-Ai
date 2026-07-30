@@ -40,17 +40,6 @@ Auto-Social-AI eliminates the manual effort of creating social media content by 
 - Tavily Search API
 - Gmail API
 
----
-
-## 📷 Workflow
-
-> Add your n8n workflow screenshot here.
-
-Example:
-
-```md
-![Workflow](workflow.png)
-```
 
 ---
 
