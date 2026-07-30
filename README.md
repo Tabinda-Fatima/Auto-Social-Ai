@@ -51,10 +51,6 @@ https://drive.google.com/file/d/10zCPWxHz0ZnJ69F5Wc8_LWEr-WbhF3KD/view
 
 ---
 
-## 📂 Workflow File
-
-The complete n8n workflow (`Auto-Social-Ai (1).json`) is included in this repository and can be imported directly into n8n.
----
 
 ## 💼 Use Cases
 
